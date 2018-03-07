@@ -1,0 +1,48 @@
+group 'jetbrains'
+version '1.0-SNAPSHOT'
+
+apply plugin: "base"
+archivesBaseName="IpToCloudResolver"
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "4.4"
+}
+
+buildscript {
+    ext.kotlin_version = '1.2.30'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDirs 'src'
+        }
+    }
+}
+
+dependencies {
+    compile group: 'commons-net', name: 'commons-net', version: '3.3'
+    compile group: 'com.github.seancfoley', name: 'ipaddress', version:'4.1.0'
+    compile group: 'dnsjava', name: 'dnsjava', version: '2.1.8'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.4'
+
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.2.30'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.2.30'
+}
