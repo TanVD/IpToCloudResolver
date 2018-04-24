@@ -31,4 +31,6 @@ class GoogleCloudPredicate : CloudIpPredicate {
     }
 
     override fun check(ip: InetAddress): Boolean = subnets.any { it.contains(IPAddressString(ip.hostAddress).address) }
+
+    override fun list(): List<IPAddress> = subnets
 }

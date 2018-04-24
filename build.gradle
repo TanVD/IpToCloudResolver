@@ -1,5 +1,5 @@
-group 'jetbrains'
-version '1.0-SNAPSHOT'
+group 'tanvd'
+version '1.0'
 
 apply plugin: "base"
 archivesBaseName="IpToCloudResolver"
@@ -36,13 +36,31 @@ sourceSets {
     }
 }
 
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
 dependencies {
     compile group: 'commons-net', name: 'commons-net', version: '3.3'
     compile group: 'com.github.seancfoley', name: 'ipaddress', version:'4.1.0'
     compile group: 'dnsjava', name: 'dnsjava', version: '2.1.8'
-    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.4'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.4'
 
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.2.30'
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.2.30'
+    provided group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.4'
+    provided group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.4'
+}
+
+
+jar {
+    baseName 'ip-to-cloud-resolver'
+    dependsOn configurations.runtime
+    from {
+        (configurations.runtime - configurations.provided).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
 }
