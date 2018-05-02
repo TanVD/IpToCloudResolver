@@ -1,15 +1,16 @@
-group 'tanvd'
+group 'org.tanvd'
 version '1.0'
 
 apply plugin: "base"
-archivesBaseName="IpToCloudResolver"
+apply plugin: "maven-publish"
+archivesBaseName="ip-to-cloud-resolver"
 
 task wrapper(type: Wrapper) {
     gradleVersion = "4.4"
 }
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.40'
 
     repositories {
         mavenCentral()
@@ -28,14 +29,6 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    main {
-        kotlin {
-            srcDirs 'src'
-        }
-    }
-}
-
 configurations {
     provided
     compile.extendsFrom provided
@@ -50,6 +43,24 @@ dependencies {
     provided group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.4'
 }
 
+
+task sourceJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'org.tanvd'
+            artifactId 'ip-to-cloud-resolver'
+            version '1.0'
+
+            from components.java
+            artifact tasks.sourceJar
+        }
+    }
+}
 
 jar {
     baseName 'ip-to-cloud-resolver'
