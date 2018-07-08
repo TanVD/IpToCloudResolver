@@ -3,7 +3,7 @@ version '1.0'
 
 apply plugin: "base"
 apply plugin: "maven-publish"
-archivesBaseName="ip-to-cloud-resolver"
+archivesBaseName = "ip-to-cloud-resolver"
 
 task wrapper(type: Wrapper) {
     gradleVersion = "4.4"
@@ -36,7 +36,7 @@ configurations {
 
 dependencies {
     compile group: 'commons-net', name: 'commons-net', version: '3.3'
-    compile group: 'com.github.seancfoley', name: 'ipaddress', version:'4.1.0'
+    compile group: 'com.github.seancfoley', name: 'ipaddress', version: '4.1.0'
     compile group: 'dnsjava', name: 'dnsjava', version: '2.1.8'
 
     provided group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.4'

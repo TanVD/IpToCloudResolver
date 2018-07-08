@@ -22,8 +22,7 @@ class GoogleCloudPredicate : CloudIpPredicate {
 
         for (server in servers) {
             val ipsTextRecords = (Lookup(server, Type.TXT).run().first() as TXTRecord)
-            val ips = (ipsTextRecords.strings as List<String>).first().split(" ").filter { it.startsWith("ip4:") || it.startsWith("ip6:") }.
-                    map { it.drop("ip*:".length) }
+            val ips = (ipsTextRecords.strings as List<String>).first().split(" ").filter { it.startsWith("ip4:") || it.startsWith("ip6:") }.map { it.drop("ip*:".length) }
             for (ip in ips) {
                 subnets.add(IPAddressString(ip).address)
             }
